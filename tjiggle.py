@@ -40,7 +40,7 @@ settings_base_origin_object = Description({
                 Assignment("Obase", None)
             ]
         })
-    ]
+    ],
     "locales": {
         "strings_us": "Origin"
     }
@@ -62,7 +62,7 @@ settings_base_target_offset = Description({
     "key": "VECTOR",
     "value": [
         Assignment("UNIT", "METER")
-    ]
+    ],
     "locales": {
         "strings_us": "Target Offset"
     }
@@ -118,7 +118,7 @@ settings_base_up_vector = Description({
             vector_zplus,
             vector_zminus
         ])
-    ]
+    ],
     "locales": {
         "strings_us": "Up Vector"
     }
@@ -137,7 +137,7 @@ settings_base_aim_vector = Description({
             vector_zplus,
             vector_zminus
         ])
-    ]
+    ],
     "locales": {
         "strings_us": "Aim Vector"
     }
@@ -219,9 +219,9 @@ group_physics = Group("GROUP_PHYSICS", {
 
 root = Container("Tjiggle", {
     "value": [
-        Description("NAME", "Tjiggle"),
-        Description("INCLUDE", "Tbase"),
-        Description("INCLUDE", "Texpression"),
+        Assignment("NAME", "Tjiggle"),
+        Assignment("INCLUDE", "Tbase"),
+        Assignment("INCLUDE", "Texpression"),
         Group("GROUP_SETTINGS", {
             "value": [
                 crumb_flag_group_open,

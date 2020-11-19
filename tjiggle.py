@@ -68,37 +68,37 @@ settings_base_target_offset = Description({
     }
 })
 
-vector_xplus = Assignment("VECTOR_XPLUS", None, {
+vector_xplus = Assignment(None, "VECTOR_XPLUS", {
     "id": "VECTOR_XPLUS",
     "locales": {
         "strings_us": "X+"
     }
 })
-vector_xminus = Assignment("VECTOR_XMINUS", None, {
+vector_xminus = Assignment(None, "VECTOR_XMINUS", {
     "id": "VECTOR_XMINUS",
     "locales": {
         "strings_us": "X-"
     }
 })
-vector_yplus = Assignment("VECTOR_YPLUS", None, {
+vector_yplus = Assignment(None, "VECTOR_YPLUS", {
     "id": "VECTOR_YPLUS",
     "locales": {
         "strings_us": "Y+"
     }
 })
-vector_yminus = Assignment("VECTOR_YMINUS", None, {
+vector_yminus = Assignment(None, "VECTOR_YMINUS", {
     "id": "VECTOR_YMINUS",
     "locales": {
         "strings_us": "Y-"
     }
 })
-vector_zplus = Assignment("VECTOR_ZPLUS", None, {
+vector_zplus = Assignment(None, "VECTOR_ZPLUS", {
     "id": "VECTOR_ZPLUS",
     "locales": {
         "strings_us": "Z+"
     }
 })
-vector_zminus = Assignment("VECTOR_ZMINUS", None, {
+vector_zminus = Assignment(None, "VECTOR_ZMINUS", {
     "id": "VECTOR_ZMINUS",
     "locales": {
         "strings_us": "Z-"
@@ -158,7 +158,8 @@ group_base = Group("GROUP_BASE", {
         crumb_flag_group_open,
         settings_base_origin_object,
         settings_base_start_time,
-        settings_base_up_vector
+        settings_base_up_vector,
+        settings_base_aim_vector
     ],
     "locales": {
         "strings_us": "Base"

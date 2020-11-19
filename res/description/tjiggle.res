@@ -27,7 +27,7 @@ CONTAINER Tjiggle
             LINK SETTINGS_BASE_ORIGIN_OBJECT
             {
                 ANIM OFF;
-                ACCEPT 
+                ACCEPT
                 {
                     Obase ;
                 }
@@ -39,14 +39,27 @@ CONTAINER Tjiggle
             LONG SETTINGS_BASE_UP_VECTOR
             {
                 ANIM OFF;
-                CYCLE 
+                CYCLE
                 {
-                    VECTOR_XPLUS ;
-                    VECTOR_XMINUS ;
-                    VECTOR_YPLUS ;
-                    VECTOR_YMINUS ;
-                    VECTOR_ZPLUS ;
-                    VECTOR_ZMINUS ;
+                    VECTOR_XPLUS;
+                    VECTOR_XMINUS;
+                    VECTOR_YPLUS;
+                    VECTOR_YMINUS;
+                    VECTOR_ZPLUS;
+                    VECTOR_ZMINUS;
+                }
+            }
+            LONG SETTINGS_BASE_AIM_VECTOR
+            {
+                ANIM OFF;
+                CYCLE
+                {
+                    VECTOR_XPLUS;
+                    VECTOR_XMINUS;
+                    VECTOR_YPLUS;
+                    VECTOR_YMINUS;
+                    VECTOR_ZPLUS;
+                    VECTOR_ZMINUS;
                 }
             }
         }

@@ -36,6 +36,7 @@ CONTAINER Tjiggle
             {
                 UNIT METER;
             }
+            BOOL ;
             REAL SETTINGS_BASE_START_TIME
             {
                 UNIT TIME;

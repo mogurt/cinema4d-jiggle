@@ -166,6 +166,7 @@ group_base = Group("GROUP_BASE", {
         crumb_flag_group_open,
         settings_base_origin_object,
         settings_base_target_offset,
+        settings_base_draw_debug_lines,
         settings_base_start_time,
         settings_base_up_vector,
         settings_base_aim_vector

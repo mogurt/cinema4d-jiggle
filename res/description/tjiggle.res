@@ -36,7 +36,10 @@ CONTAINER Tjiggle
             {
                 UNIT METER;
             }
-            BOOL ;
+            BOOL SETTINGS_BASE_DRAW_DEBUG_LINES
+            {
+                ANIM OFF;
+            }
             REAL SETTINGS_BASE_START_TIME
             {
                 UNIT TIME;

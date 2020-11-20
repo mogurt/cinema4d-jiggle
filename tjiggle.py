@@ -71,6 +71,9 @@ settings_base_target_offset = Description({
 settings_base_draw_debug_lines = Description({
     "id": "SETTINGS_BASE_DRAW_DEBUG_LINES",
     "key": "BOOL",
+    "value": [
+        Assignment("ANIM", "OFF")
+    ],
     "locales": {
         "strings_us": "Draw Debug Lines"
     }

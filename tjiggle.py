@@ -68,6 +68,14 @@ settings_base_target_offset = Description({
     }
 })
 
+settings_base_draw_debug_lines = Description({
+    "id": "SETTINGS_BASE_DRAW_DEBUG_LINES",
+    "key": "BOOL",
+    "locales": {
+        "strings_us": "Draw Debug Lines"
+    }
+})
+
 vector_xplus = Assignment(None, "VECTOR_XPLUS", {
     "id": "VECTOR_XPLUS",
     "locales": {
@@ -260,6 +268,7 @@ SETTINGS_BASE_START_TIME = settings_base_start_time.GetId()
 SETTINGS_BASE_TARGET_OFFSET = settings_base_target_offset.GetId()
 SETTINGS_BASE_UP_VECTOR = settings_base_up_vector.GetId()
 SETTINGS_BASE_AIM_VECTOR = settings_base_aim_vector.GetId()
+SETTINGS_BASE_DRAW_DEBUG_LINES = settings_base_draw_debug_lines.GetId()
 
 # physics ids
 SETTINGS_PHYSICS_STIFFNESS = settings_physics_stiffness.GetId()
@@ -292,6 +301,10 @@ class DataContainer(object):
     @targetOffset.setter
     def targetOffset(self, value):
         self.data[SETTINGS_BASE_TARGET_OFFSET] = value
+
+    @property
+    def drawDebugLines(self):
+        return self.data[SETTINGS_BASE_DRAW_DEBUG_LINES]
 
     # time
 
@@ -554,6 +567,9 @@ class Jiggle(c4d.plugins.TagData):
     def Draw(self, tag, op, bd, bh):
         data = DataContainer(tag.GetDataInstance())
         drawpass = bd.GetDrawPass()
+
+        if not data.drawDebugLines:
+            return True
 
         # draw target line
         targetPosition = Jiggle.CalculateTargetPosition(data.originObject, data.targetOffset)

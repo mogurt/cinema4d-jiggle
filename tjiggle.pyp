@@ -19,6 +19,7 @@ SETTINGS_BASE_START_TIME = 99378564
 SETTINGS_BASE_TARGET_OFFSET = 11575997
 SETTINGS_BASE_UP_VECTOR = 60227063
 SETTINGS_BASE_AIM_VECTOR = 80647684
+SETTINGS_BASE_DRAW_DEBUG_LINES = 70667956
 SETTINGS_PHYSICS_STIFFNESS = 98105643
 SETTINGS_PHYSICS_MASS = 55042790
 SETTINGS_PHYSICS_DAMPING = 62379519
@@ -48,6 +49,10 @@ class DataContainer(object):
     @targetOffset.setter
     def targetOffset(self, value):
         self.data[SETTINGS_BASE_TARGET_OFFSET] = value
+
+    @property
+    def drawDebugLines(self):
+        return self.data[SETTINGS_BASE_DRAW_DEBUG_LINES]
 
     # time
 
@@ -300,7 +305,7 @@ class Jiggle(c4d.plugins.TagData):
                 -aim
             )
 
-        op.SetMg(jiggleMatrix.GetNormalized())
+        op.SetMg(jiggleMatrix)
 
         # finish execute
         self.previousFrame = currentFrame
@@ -310,6 +315,9 @@ class Jiggle(c4d.plugins.TagData):
     def Draw(self, tag, op, bd, bh):
         data = DataContainer(tag.GetDataInstance())
         drawpass = bd.GetDrawPass()
+
+        if not data.drawDebugLines:
+            return True
 
         # draw target line
         targetPosition = Jiggle.CalculateTargetPosition(data.originObject, data.targetOffset)

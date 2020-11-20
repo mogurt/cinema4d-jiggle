@@ -544,7 +544,7 @@ class Jiggle(c4d.plugins.TagData):
                 -aim
             )
 
-        op.SetMg(jiggleMatrix.GetNormalized())
+        op.SetMg(jiggleMatrix)
 
         # finish execute
         self.previousFrame = currentFrame

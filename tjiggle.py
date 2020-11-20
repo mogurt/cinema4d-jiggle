@@ -486,17 +486,17 @@ class Jiggle(c4d.plugins.TagData):
 
         # change up vector position
         if data.upVector == VECTOR_XPLUS:
-            up = c4d.Vector(1.0, 0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(1.0, 0, 0))
         elif data.upVector == VECTOR_XMINUS:
-            up = c4d.Vector(-1.0, 0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(-1.0, 0, 0))
         elif data.upVector == VECTOR_YPLUS:
-            up = c4d.Vector(0, 1.0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, 1.0, 0))
         elif data.upVector == VECTOR_YMINUS:
-            up = c4d.Vector(0, -1.0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, -1.0, 0))
         elif data.upVector == VECTOR_ZPLUS:
-            up = c4d.Vector(0, 0, 1.0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, 0, 1.0))
         elif data.upVector == VECTOR_ZMINUS:
-            up = c4d.Vector(0, 0, -1.0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, 0, -1.0))
 
         side = up.Cross(aim)
 

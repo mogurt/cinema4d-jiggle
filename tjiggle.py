@@ -79,37 +79,37 @@ settings_base_draw_debug_lines = Description({
     }
 })
 
-vector_xplus = Assignment(None, "VECTOR_XPLUS", {
+vector_xplus = Assignment(None, None, {
     "id": "VECTOR_XPLUS",
     "locales": {
         "strings_us": "X+"
     }
 })
-vector_xminus = Assignment(None, "VECTOR_XMINUS", {
+vector_xminus = Assignment(None, None, {
     "id": "VECTOR_XMINUS",
     "locales": {
         "strings_us": "X-"
     }
 })
-vector_yplus = Assignment(None, "VECTOR_YPLUS", {
+vector_yplus = Assignment(None, None, {
     "id": "VECTOR_YPLUS",
     "locales": {
         "strings_us": "Y+"
     }
 })
-vector_yminus = Assignment(None, "VECTOR_YMINUS", {
+vector_yminus = Assignment(None, None, {
     "id": "VECTOR_YMINUS",
     "locales": {
         "strings_us": "Y-"
     }
 })
-vector_zplus = Assignment(None, "VECTOR_ZPLUS", {
+vector_zplus = Assignment(None, None, {
     "id": "VECTOR_ZPLUS",
     "locales": {
         "strings_us": "Z+"
     }
 })
-vector_zminus = Assignment(None, "VECTOR_ZMINUS", {
+vector_zminus = Assignment(None, None, {
     "id": "VECTOR_ZMINUS",
     "locales": {
         "strings_us": "Z-"

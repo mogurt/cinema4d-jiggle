@@ -198,9 +198,6 @@ settings_squash_stretch_enable = Description({
     ],
     "locales": {
         "strings_us": "Enable"
-    },
-    "locales": {
-        "strings_us": "Squash and Stretch"
     }
 })
 
@@ -212,7 +209,7 @@ settings_squash_stretch_stretch_strength = Description({
         *crumb_percent_slider_limit_min
     ],
     "locales": {
-        "strings_us": "Strength"
+        "strings_us": "Stretch Strength"
     }
 })
 
@@ -224,7 +221,7 @@ settings_squash_stretch_squash_strength = Description({
         *crumb_percent_slider_limit_min
     ],
     "locales": {
-        "strings_us": "Strength"
+        "strings_us": "Squash Strength"
     }
 })
 
@@ -234,7 +231,10 @@ group_squash_stretch = Group("GROUP_SQUASH_STRETCH", {
         settings_squash_stretch_enable,
         settings_squash_stretch_stretch_strength,
         settings_squash_stretch_squash_strength
-    ]
+    ],
+    "locales": {
+        "strings_us": "Squash and Stretch"
+    }
 })
 
 # physics descriptions

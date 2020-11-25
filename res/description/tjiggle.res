@@ -15,10 +15,10 @@ CONTAINER Tjiggle
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
-                MIN 0.0;
                 MINSLIDER 0.0;
-                MAX 100.0;
                 MAXSLIDER 100.0;
+                MIN 0.0;
+                MAX 100.0;
             }
         }
         GROUP GROUP_BASE
@@ -83,16 +83,18 @@ CONTAINER Tjiggle
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
-                MIN 0.0;
                 MINSLIDER 0.0;
+                MAXSLIDER 100.0;
+                MIN 0.0;
             }
             REAL SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH
             {
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
-                MIN 0.0;
                 MINSLIDER 0.0;
+                MAXSLIDER 100.0;
+                MIN 0.0;
             }
         }
         GROUP GROUP_PHYSICS
@@ -103,18 +105,24 @@ CONTAINER Tjiggle
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
+                MINSLIDER 0.0;
+                MAXSLIDER 100.0;
             }
             REAL SETTINGS_PHYSICS_MASS
             {
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
+                MINSLIDER 0.0;
+                MAXSLIDER 100.0;
             }
             REAL SETTINGS_PHYSICS_DAMPING
             {
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
+                MINSLIDER 0.0;
+                MAXSLIDER 100.0;
             }
             VECTOR SETTINGS_PHYSICS_GRAVITY
             {

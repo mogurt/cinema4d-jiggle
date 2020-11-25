@@ -11,17 +11,17 @@ from bootstrap4c4d import Description, Assignment, Group, Container
 crumb_percent_slider = [
     Assignment("STEP", 1.0),
     Assignment("UNIT", "PERCENT"),
-    Assignment("CUSTOMGUI", "REALSLIDER")
+    Assignment("CUSTOMGUI", "REALSLIDER"),
+    Assignment("MINSLIDER", 0.0),
+    Assignment("MAXSLIDER", 100.0)
 ]
 
 crumb_percent_slider_limit_min = [
-    Assignment("MIN", 0.0),
-    Assignment("MINSLIDER", 0.0)
+    Assignment("MIN", 0.0)
 ]
 
 crumb_percent_slider_limit_max = [
-    Assignment("MAX", 100.0),
-    Assignment("MAXSLIDER", 100.0)
+    Assignment("MAX", 100.0)
 ]
 
 crumb_flag_group_open = Assignment("DEFAULT", 1)

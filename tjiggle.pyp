@@ -168,6 +168,10 @@ class Jiggle(c4d.plugins.TagData):
         # aim vector
         data.aimVector = VECTOR_ZPLUS
 
+        # squash stretch
+        data.squashStretchStretchStrength = 0.0
+        data.squashStretchSquashStrength = 1.0
+
         # physics related
         data.stiffness = 0.1
         data.mass = 0.9

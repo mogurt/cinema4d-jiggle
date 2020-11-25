@@ -12,13 +12,13 @@ CONTAINER Tjiggle
             DEFAULT 1;
             REAL SETTINGS_EFFECT_STRENGTH
             {
-                MIN 0.0;
-                MAX 100.0;
-                MINSLIDER 0.0;
-                MAXSLIDER 100.0;
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
+                MIN 0.0;
+                MINSLIDER 0.0;
+                MAX 100.0;
+                MAXSLIDER 100.0;
             }
         }
         GROUP GROUP_BASE
@@ -80,23 +80,19 @@ CONTAINER Tjiggle
             }
             REAL SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH
             {
-                MIN 0.0;
-                MAX 100.0;
-                MINSLIDER 0.0;
-                MAXSLIDER 100.0;
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
+                MIN 0.0;
+                MINSLIDER 0.0;
             }
             REAL SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH
             {
-                MIN 0.0;
-                MAX 100.0;
-                MINSLIDER 0.0;
-                MAXSLIDER 100.0;
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
+                MIN 0.0;
+                MINSLIDER 0.0;
             }
         }
         GROUP GROUP_PHYSICS
@@ -104,30 +100,18 @@ CONTAINER Tjiggle
             DEFAULT 1;
             REAL SETTINGS_PHYSICS_STIFFNESS
             {
-                MIN 0.0;
-                MAX 100.0;
-                MINSLIDER 0.0;
-                MAXSLIDER 100.0;
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
             }
             REAL SETTINGS_PHYSICS_MASS
             {
-                MIN 0.0;
-                MAX 100.0;
-                MINSLIDER 0.0;
-                MAXSLIDER 100.0;
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;
             }
             REAL SETTINGS_PHYSICS_DAMPING
             {
-                MIN 0.0;
-                MAX 100.0;
-                MINSLIDER 0.0;
-                MAXSLIDER 100.0;
                 STEP 1.0;
                 UNIT PERCENT;
                 CUSTOMGUI REALSLIDER;

@@ -9,13 +9,19 @@ PLUGIN_ID = 123456790
 from bootstrap4c4d import Description, Assignment, Group, Container
 
 crumb_percent_slider = [
-    Assignment("MIN", 0.0),
-    Assignment("MAX", 100.0),
-    Assignment("MINSLIDER", 0.0),
-    Assignment("MAXSLIDER", 100.0),
     Assignment("STEP", 1.0),
     Assignment("UNIT", "PERCENT"),
     Assignment("CUSTOMGUI", "REALSLIDER")
+]
+
+crumb_percent_slider_limit_min = [
+    Assignment("MIN", 0.0),
+    Assignment("MINSLIDER", 0.0)
+]
+
+crumb_percent_slider_limit_max = [
+    Assignment("MAX", 100.0),
+    Assignment("MAXSLIDER", 100.0)
 ]
 
 crumb_flag_group_open = Assignment("DEFAULT", 1)
@@ -23,7 +29,11 @@ crumb_flag_group_open = Assignment("DEFAULT", 1)
 settings_effect_strength = Description({
     "id": "SETTINGS_EFFECT_STRENGTH",
     "key": "REAL",
-    "value": crumb_percent_slider,
+    "value": [
+        *crumb_percent_slider,
+        *crumb_percent_slider_limit_min,
+        *crumb_percent_slider_limit_max
+    ],
     "locales": {
         "strings_us": "Strength"
     }
@@ -197,7 +207,10 @@ settings_squash_stretch_enable = Description({
 settings_squash_stretch_stretch_strength = Description({
     "id": "SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH",
     "key": "REAL",
-    "value": crumb_percent_slider,
+    "value": [
+        *crumb_percent_slider,
+        *crumb_percent_slider_limit_min
+    ],
     "locales": {
         "strings_us": "Strength"
     }
@@ -206,7 +219,10 @@ settings_squash_stretch_stretch_strength = Description({
 settings_squash_stretch_squash_strength = Description({
     "id": "SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH",
     "key": "REAL",
-    "value": crumb_percent_slider,
+    "value": [
+        *crumb_percent_slider,
+        *crumb_percent_slider_limit_min
+    ],
     "locales": {
         "strings_us": "Strength"
     }
@@ -468,6 +484,10 @@ class Jiggle(c4d.plugins.TagData):
 
         # aim vector
         data.aimVector = VECTOR_ZPLUS
+
+        # squash stretch
+        data.squashStretchStretchStrength = 0.0
+        data.squashStretchSquashStrength = 1.0
 
         # physics related
         data.stiffness = 0.1

@@ -260,6 +260,7 @@ root = Container("Tjiggle", {
                 crumb_flag_group_open,
                 group_effect,
                 group_base,
+                group_squash_stretch,
                 group_physics
             ],
             "locales": {

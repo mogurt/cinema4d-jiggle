@@ -71,6 +71,14 @@ CONTAINER Tjiggle
                 }
             }
         }
+        GROUP GROUP_SQUASH_STRETCH
+        {
+            DEFAULT 1;
+            BOOL SETTINGS_SQUASH_STRETCH_ENABLE
+            {
+                ANIM OFF;
+            }
+        }
         GROUP GROUP_PHYSICS
         {
             DEFAULT 1;

@@ -6,7 +6,7 @@ import math
 PLUGIN_ID = 123456790
 
 #----begin_resource_section----
-from bootstrap import Description, Assignment, Group, Container
+from bootstrap4c4d import Description, Assignment, Group, Container
 
 crumb_percent_slider = [
     Assignment("MIN", 0.0),
@@ -179,6 +179,25 @@ group_base = Group("GROUP_BASE", {
     },
 })
 
+# squash and stretch
+settings_squash_stretch_enable = Description({
+    "id": "SETTINGS_SQUASH_STRETCH_ENABLE",
+    "key": "BOOL",
+    "value": [
+        Assignment("ANIM", "OFF")
+    ],
+    "locales": {
+        "strings_us": "Enable"
+    }
+})
+
+group_squash_stretch = Group("GROUP_SQUASH_STRETCH", {
+    "value": [
+        crumb_flag_group_open,
+        settings_squash_stretch_enable
+    ]
+})
+
 # physics descriptions
 settings_physics_stiffness = Description({
     "id": "SETTINGS_PHYSICS_STIFFNESS",
@@ -274,6 +293,9 @@ SETTINGS_BASE_UP_VECTOR = settings_base_up_vector.GetId()
 SETTINGS_BASE_AIM_VECTOR = settings_base_aim_vector.GetId()
 SETTINGS_BASE_DRAW_DEBUG_LINES = settings_base_draw_debug_lines.GetId()
 
+# squash stretch ids
+SETTINGS_SQUASH_STRETCH_ENABLE = settings_squash_stretch_enable.GetId()
+
 # physics ids
 SETTINGS_PHYSICS_STIFFNESS = settings_physics_stiffness.GetId()
 SETTINGS_PHYSICS_MASS = settings_physics_mass.GetId()
@@ -337,6 +359,11 @@ class DataContainer(object):
     @aimVector.setter
     def aimVector(self, value):
         self.data[SETTINGS_BASE_AIM_VECTOR] = value
+
+    # squash stretch
+    @property
+    def squashStretchEnable(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_ENABLE]
 
     # physics
 
@@ -499,6 +526,7 @@ class Jiggle(c4d.plugins.TagData):
         targetPosition = c4d.utils.MixVec(projectedPosition, self.position, data.strength)
 
         # calculate matrix
+        # calculate aim vector
         aim = c4d.Vector(targetPosition - originPosition).GetNormalized()
 
         # change up vector position
@@ -516,6 +544,23 @@ class Jiggle(c4d.plugins.TagData):
             up = originMatrix.MulV(c4d.Vector(0, 0, -1.0))
 
         side = up.Cross(aim)
+
+        # calculate squash strech
+        if data.squashStretchEnable:
+            distance = c4d.Vector().GetDistance(originPosition, targetPosition)
+
+            maxDistance = data.targetOffset.GetLength()
+
+            relativeDistance = distance - maxDistance
+
+            squashStretchBias = maxDistance / abs(relativeDistance)
+
+            if relativeDistance > 0.0:
+                # stretch
+                aim = aim * (1.0 + squashStretchBias)
+            else:
+                # squash
+                aim = aim * (1.0 - squashStretchBias)
 
         # change input order based on aim axis
         if data.aimVector == VECTOR_XPLUS:

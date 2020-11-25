@@ -6,16 +6,22 @@ import math
 PLUGIN_ID = 123456790
 
 #----begin_resource_section----
-from bootstrap import Description, Assignment, Group, Container
+from bootstrap4c4d import Description, Assignment, Group, Container
 
 crumb_percent_slider = [
-    Assignment("MIN", 0.0),
-    Assignment("MAX", 100.0),
-    Assignment("MINSLIDER", 0.0),
-    Assignment("MAXSLIDER", 100.0),
     Assignment("STEP", 1.0),
     Assignment("UNIT", "PERCENT"),
-    Assignment("CUSTOMGUI", "REALSLIDER")
+    Assignment("CUSTOMGUI", "REALSLIDER"),
+    Assignment("MINSLIDER", 0.0),
+    Assignment("MAXSLIDER", 100.0)
+]
+
+crumb_percent_slider_limit_min = [
+    Assignment("MIN", 0.0)
+]
+
+crumb_percent_slider_limit_max = [
+    Assignment("MAX", 100.0)
 ]
 
 crumb_flag_group_open = Assignment("DEFAULT", 1)
@@ -23,7 +29,11 @@ crumb_flag_group_open = Assignment("DEFAULT", 1)
 settings_effect_strength = Description({
     "id": "SETTINGS_EFFECT_STRENGTH",
     "key": "REAL",
-    "value": crumb_percent_slider,
+    "value": [
+        *crumb_percent_slider,
+        *crumb_percent_slider_limit_min,
+        *crumb_percent_slider_limit_max
+    ],
     "locales": {
         "strings_us": "Strength"
     }
@@ -68,37 +78,48 @@ settings_base_target_offset = Description({
     }
 })
 
-vector_xplus = Assignment(None, "VECTOR_XPLUS", {
+settings_base_draw_debug_lines = Description({
+    "id": "SETTINGS_BASE_DRAW_DEBUG_LINES",
+    "key": "BOOL",
+    "value": [
+        Assignment("ANIM", "OFF")
+    ],
+    "locales": {
+        "strings_us": "Draw Debug Lines"
+    }
+})
+
+vector_xplus = Assignment(None, None, {
     "id": "VECTOR_XPLUS",
     "locales": {
         "strings_us": "X+"
     }
 })
-vector_xminus = Assignment(None, "VECTOR_XMINUS", {
+vector_xminus = Assignment(None, None, {
     "id": "VECTOR_XMINUS",
     "locales": {
         "strings_us": "X-"
     }
 })
-vector_yplus = Assignment(None, "VECTOR_YPLUS", {
+vector_yplus = Assignment(None, None, {
     "id": "VECTOR_YPLUS",
     "locales": {
         "strings_us": "Y+"
     }
 })
-vector_yminus = Assignment(None, "VECTOR_YMINUS", {
+vector_yminus = Assignment(None, None, {
     "id": "VECTOR_YMINUS",
     "locales": {
         "strings_us": "Y-"
     }
 })
-vector_zplus = Assignment(None, "VECTOR_ZPLUS", {
+vector_zplus = Assignment(None, None, {
     "id": "VECTOR_ZPLUS",
     "locales": {
         "strings_us": "Z+"
     }
 })
-vector_zminus = Assignment(None, "VECTOR_ZMINUS", {
+vector_zminus = Assignment(None, None, {
     "id": "VECTOR_ZMINUS",
     "locales": {
         "strings_us": "Z-"
@@ -157,6 +178,8 @@ group_base = Group("GROUP_BASE", {
     "value": [
         crumb_flag_group_open,
         settings_base_origin_object,
+        settings_base_target_offset,
+        settings_base_draw_debug_lines,
         settings_base_start_time,
         settings_base_up_vector,
         settings_base_aim_vector
@@ -164,6 +187,54 @@ group_base = Group("GROUP_BASE", {
     "locales": {
         "strings_us": "Base"
     },
+})
+
+# squash and stretch
+settings_squash_stretch_enable = Description({
+    "id": "SETTINGS_SQUASH_STRETCH_ENABLE",
+    "key": "BOOL",
+    "value": [
+        Assignment("ANIM", "OFF")
+    ],
+    "locales": {
+        "strings_us": "Enable"
+    }
+})
+
+settings_squash_stretch_stretch_strength = Description({
+    "id": "SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH",
+    "key": "REAL",
+    "value": [
+        *crumb_percent_slider,
+        *crumb_percent_slider_limit_min
+    ],
+    "locales": {
+        "strings_us": "Stretch Strength"
+    }
+})
+
+settings_squash_stretch_squash_strength = Description({
+    "id": "SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH",
+    "key": "REAL",
+    "value": [
+        *crumb_percent_slider,
+        *crumb_percent_slider_limit_min
+    ],
+    "locales": {
+        "strings_us": "Squash Strength"
+    }
+})
+
+group_squash_stretch = Group("GROUP_SQUASH_STRETCH", {
+    "value": [
+        crumb_flag_group_open,
+        settings_squash_stretch_enable,
+        settings_squash_stretch_stretch_strength,
+        settings_squash_stretch_squash_strength
+    ],
+    "locales": {
+        "strings_us": "Squash and Stretch"
+    }
 })
 
 # physics descriptions
@@ -228,6 +299,7 @@ root = Container("Tjiggle", {
                 crumb_flag_group_open,
                 group_effect,
                 group_base,
+                group_squash_stretch,
                 group_physics
             ],
             "locales": {
@@ -259,6 +331,12 @@ SETTINGS_BASE_START_TIME = settings_base_start_time.GetId()
 SETTINGS_BASE_TARGET_OFFSET = settings_base_target_offset.GetId()
 SETTINGS_BASE_UP_VECTOR = settings_base_up_vector.GetId()
 SETTINGS_BASE_AIM_VECTOR = settings_base_aim_vector.GetId()
+SETTINGS_BASE_DRAW_DEBUG_LINES = settings_base_draw_debug_lines.GetId()
+
+# squash stretch ids
+SETTINGS_SQUASH_STRETCH_ENABLE = settings_squash_stretch_enable.GetId()
+SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH = settings_squash_stretch_stretch_strength.GetId()
+SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH = settings_squash_stretch_squash_strength.GetId()
 
 # physics ids
 SETTINGS_PHYSICS_STIFFNESS = settings_physics_stiffness.GetId()
@@ -292,6 +370,10 @@ class DataContainer(object):
     def targetOffset(self, value):
         self.data[SETTINGS_BASE_TARGET_OFFSET] = value
 
+    @property
+    def drawDebugLines(self):
+        return self.data[SETTINGS_BASE_DRAW_DEBUG_LINES]
+
     # time
 
     @property
@@ -319,6 +401,27 @@ class DataContainer(object):
     @aimVector.setter
     def aimVector(self, value):
         self.data[SETTINGS_BASE_AIM_VECTOR] = value
+
+    # squash stretch
+    @property
+    def squashStretchEnable(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_ENABLE]
+
+    @property
+    def squashStretchStretchStrength(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH]
+
+    @squashStretchStretchStrength.setter
+    def squashStretchStretchStrength(self, value):
+        self.data[SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH] = value
+
+    @property
+    def squashStretchSquashStrength(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH]
+
+    @squashStretchSquashStrength.setter
+    def squashStretchSquashStrength(self, value):
+        self.data[SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH] = value
 
     # physics
 
@@ -381,6 +484,10 @@ class Jiggle(c4d.plugins.TagData):
 
         # aim vector
         data.aimVector = VECTOR_ZPLUS
+
+        # squash stretch
+        data.squashStretchStretchStrength = 0.0
+        data.squashStretchSquashStrength = 0.0
 
         # physics related
         data.stiffness = 0.1
@@ -481,23 +588,52 @@ class Jiggle(c4d.plugins.TagData):
         targetPosition = c4d.utils.MixVec(projectedPosition, self.position, data.strength)
 
         # calculate matrix
+        # calculate aim vector
         aim = c4d.Vector(targetPosition - originPosition).GetNormalized()
 
         # change up vector position
         if data.upVector == VECTOR_XPLUS:
-            up = c4d.Vector(1.0, 0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(1.0, 0, 0))
         elif data.upVector == VECTOR_XMINUS:
-            up = c4d.Vector(-1.0, 0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(-1.0, 0, 0))
         elif data.upVector == VECTOR_YPLUS:
-            up = c4d.Vector(0, 1.0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, 1.0, 0))
         elif data.upVector == VECTOR_YMINUS:
-            up = c4d.Vector(0, -1.0, 0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, -1.0, 0))
         elif data.upVector == VECTOR_ZPLUS:
-            up = c4d.Vector(0, 0, 1.0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, 0, 1.0))
         elif data.upVector == VECTOR_ZMINUS:
-            up = c4d.Vector(0, 0, -1.0) * originMatrix
+            up = originMatrix.MulV(c4d.Vector(0, 0, -1.0))
 
         side = up.Cross(aim)
+
+        # calculate squash strech
+        if data.squashStretchEnable:
+            distance = c4d.Vector(targetPosition - originPosition).GetLength()
+
+            maxDistance = data.targetOffset.GetLength()
+
+            relativeDistance = distance - maxDistance
+
+            try:
+                squashStretchBias = abs(relativeDistance) / maxDistance
+            except ZeroDivisionError:
+                squashStretchBias = 0.0
+
+            if relativeDistance > 0.0:
+                squashStretchBias = squashStretchBias * data.squashStretchStretchStrength
+
+                # stretch
+                aim = aim * (1.0 + squashStretchBias)
+                up = up * (1.0 - squashStretchBias)
+                side = side * (1.0 - squashStretchBias)
+            else:
+                squashStretchBias = squashStretchBias * data.squashStretchSquashStrength
+
+                # squash
+                aim = aim * (1.0 - squashStretchBias)
+                up = up * (1.0 + squashStretchBias)
+                side = side * (1.0 + squashStretchBias)
 
         # change input order based on aim axis
         if data.aimVector == VECTOR_XPLUS:
@@ -543,7 +679,7 @@ class Jiggle(c4d.plugins.TagData):
                 -aim
             )
 
-        op.SetMg(jiggleMatrix.GetNormalized())
+        op.SetMg(jiggleMatrix)
 
         # finish execute
         self.previousFrame = currentFrame
@@ -553,6 +689,9 @@ class Jiggle(c4d.plugins.TagData):
     def Draw(self, tag, op, bd, bh):
         data = DataContainer(tag.GetDataInstance())
         drawpass = bd.GetDrawPass()
+
+        if not data.drawDebugLines:
+            return True
 
         # draw target line
         targetPosition = Jiggle.CalculateTargetPosition(data.originObject, data.targetOffset)

@@ -21,6 +21,8 @@ SETTINGS_BASE_UP_VECTOR = 60227063
 SETTINGS_BASE_AIM_VECTOR = 80647684
 SETTINGS_BASE_DRAW_DEBUG_LINES = 70667956
 SETTINGS_SQUASH_STRETCH_ENABLE = 8232980
+SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH = 21426227
+SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH = 71778691
 SETTINGS_PHYSICS_STIFFNESS = 98105643
 SETTINGS_PHYSICS_MASS = 55042790
 SETTINGS_PHYSICS_DAMPING = 62379519
@@ -87,6 +89,22 @@ class DataContainer(object):
     @property
     def squashStretchEnable(self):
         return self.data[SETTINGS_SQUASH_STRETCH_ENABLE]
+
+    @property
+    def squashStretchStretchStrength(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH]
+
+    @squashStretchStretchStrength.setter
+    def squashStretchStretchStrength(self, value):
+        self.data[SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH] = value
+
+    @property
+    def squashStretchSquashStrength(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH]
+
+    @squashStretchSquashStrength.setter
+    def squashStretchSquashStrength(self, value):
+        self.data[SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH] = value
 
     # physics
 
@@ -270,20 +288,31 @@ class Jiggle(c4d.plugins.TagData):
 
         # calculate squash strech
         if data.squashStretchEnable:
-            distance = c4d.Vector().GetDistance(originPosition, targetPosition)
+            distance = c4d.Vector(targetPosition - originPosition).GetLength()
 
             maxDistance = data.targetOffset.GetLength()
 
             relativeDistance = distance - maxDistance
 
-            squashStretchBias = maxDistance / abs(relativeDistance)
+            try:
+                squashStretchBias = abs(relativeDistance) / maxDistance
+            except ZeroDivisionError:
+                squashStretchBias = 0.0
 
             if relativeDistance > 0.0:
+                squashStretchBias = squashStretchBias * data.squashStretchStretchStrength
+
                 # stretch
                 aim = aim * (1.0 + squashStretchBias)
+                up = up * (1.0 - squashStretchBias)
+                side = side * (1.0 - squashStretchBias)
             else:
+                squashStretchBias = squashStretchBias * data.squashStretchSquashStrength
+
                 # squash
                 aim = aim * (1.0 - squashStretchBias)
+                up = up * (1.0 + squashStretchBias)
+                side = side * (1.0 + squashStretchBias)
 
         # change input order based on aim axis
         if data.aimVector == VECTOR_XPLUS:

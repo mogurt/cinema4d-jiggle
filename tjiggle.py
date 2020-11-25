@@ -188,13 +188,36 @@ settings_squash_stretch_enable = Description({
     ],
     "locales": {
         "strings_us": "Enable"
+    },
+    "locales": {
+        "strings_us": "Squash and Stretch"
+    }
+})
+
+settings_squash_stretch_stretch_strength = Description({
+    "id": "SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH",
+    "key": "REAL",
+    "value": crumb_percent_slider,
+    "locales": {
+        "strings_us": "Strength"
+    }
+})
+
+settings_squash_stretch_squash_strength = Description({
+    "id": "SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH",
+    "key": "REAL",
+    "value": crumb_percent_slider,
+    "locales": {
+        "strings_us": "Strength"
     }
 })
 
 group_squash_stretch = Group("GROUP_SQUASH_STRETCH", {
     "value": [
         crumb_flag_group_open,
-        settings_squash_stretch_enable
+        settings_squash_stretch_enable,
+        settings_squash_stretch_stretch_strength,
+        settings_squash_stretch_squash_strength
     ]
 })
 
@@ -296,6 +319,8 @@ SETTINGS_BASE_DRAW_DEBUG_LINES = settings_base_draw_debug_lines.GetId()
 
 # squash stretch ids
 SETTINGS_SQUASH_STRETCH_ENABLE = settings_squash_stretch_enable.GetId()
+SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH = settings_squash_stretch_stretch_strength.GetId()
+SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH = settings_squash_stretch_squash_strength.GetId()
 
 # physics ids
 SETTINGS_PHYSICS_STIFFNESS = settings_physics_stiffness.GetId()
@@ -365,6 +390,22 @@ class DataContainer(object):
     @property
     def squashStretchEnable(self):
         return self.data[SETTINGS_SQUASH_STRETCH_ENABLE]
+
+    @property
+    def squashStretchStretchStrength(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH]
+
+    @squashStretchStretchStrength.setter
+    def squashStretchStretchStrength(self, value):
+        self.data[SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH] = value
+
+    @property
+    def squashStretchSquashStrength(self):
+        return self.data[SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH]
+
+    @squashStretchSquashStrength.setter
+    def squashStretchSquashStrength(self, value):
+        self.data[SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH] = value
 
     # physics
 
@@ -548,20 +589,31 @@ class Jiggle(c4d.plugins.TagData):
 
         # calculate squash strech
         if data.squashStretchEnable:
-            distance = c4d.Vector().GetDistance(originPosition, targetPosition)
+            distance = c4d.Vector(targetPosition - originPosition).GetLength()
 
             maxDistance = data.targetOffset.GetLength()
 
             relativeDistance = distance - maxDistance
 
-            squashStretchBias = maxDistance / abs(relativeDistance)
+            try:
+                squashStretchBias = abs(relativeDistance) / maxDistance
+            except ZeroDivisionError:
+                squashStretchBias = 0.0
 
             if relativeDistance > 0.0:
+                squashStretchBias = squashStretchBias * data.squashStretchStretchStrength
+
                 # stretch
                 aim = aim * (1.0 + squashStretchBias)
+                up = up * (1.0 - squashStretchBias)
+                side = side * (1.0 - squashStretchBias)
             else:
+                squashStretchBias = squashStretchBias * data.squashStretchSquashStrength
+
                 # squash
                 aim = aim * (1.0 - squashStretchBias)
+                up = up * (1.0 + squashStretchBias)
+                side = side * (1.0 + squashStretchBias)
 
         # change input order based on aim axis
         if data.aimVector == VECTOR_XPLUS:

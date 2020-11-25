@@ -78,6 +78,26 @@ CONTAINER Tjiggle
             {
                 ANIM OFF;
             }
+            REAL SETTINGS_SQUASH_STRETCH_STRETCH_STRENGTH
+            {
+                MIN 0.0;
+                MAX 100.0;
+                MINSLIDER 0.0;
+                MAXSLIDER 100.0;
+                STEP 1.0;
+                UNIT PERCENT;
+                CUSTOMGUI REALSLIDER;
+            }
+            REAL SETTINGS_SQUASH_STRETCH_SQUASH_STRENGTH
+            {
+                MIN 0.0;
+                MAX 100.0;
+                MINSLIDER 0.0;
+                MAXSLIDER 100.0;
+                STEP 1.0;
+                UNIT PERCENT;
+                CUSTOMGUI REALSLIDER;
+            }
         }
         GROUP GROUP_PHYSICS
         {

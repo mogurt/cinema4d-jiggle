@@ -170,7 +170,7 @@ class Jiggle(c4d.plugins.TagData):
 
         # squash stretch
         data.squashStretchStretchStrength = 0.0
-        data.squashStretchSquashStrength = 1.0
+        data.squashStretchSquashStrength = 0.0
 
         # physics related
         data.stiffness = 0.1
